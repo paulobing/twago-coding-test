@@ -1,12 +1,16 @@
 package com.twago.paulo;
 
+import com.twago.paulo.providers.TwagoCodingArgumentsProvider;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,16 +18,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TwagoCodingTest {
     @Nested
     class GetMaximumValue {
-        @Test
-        void given_shortInput_when_getMaxValue_then_valueShouldBeCorrect() {
-            TwagoCoding twagoCoding = new TwagoCoding("5 3");
-            twagoCoding.executeOperation("1 2 100");
-            twagoCoding.executeOperation("2 5 100");
-            twagoCoding.executeOperation("3 4 100");
+        @ParameterizedTest
+        @ArgumentsSource(TwagoCodingArgumentsProvider.class)
+        void given_shortInput_when_getMaxValue_then_valueShouldBeCorrect(String firstLine, List<String> operations, long expectedMaximumValue) {
+            TwagoCoding twagoCoding = new TwagoCoding(firstLine);
+            for(String operation: operations) {
+                twagoCoding.executeOperation(operation);
+            }
 
             long maximumValue = twagoCoding.getMaximumValue();
 
-            assertEquals(200, maximumValue);
+            assertEquals(expectedMaximumValue, maximumValue);
         }
     }
 

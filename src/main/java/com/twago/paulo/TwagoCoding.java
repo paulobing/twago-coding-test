@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 
 public class TwagoCoding {
     private final int linesSize;
-    private int currentLine = 1;
     private final long[] numbers;
+    private int currentLine = 1;
     private long currentMaximumValue = Long.MIN_VALUE;
 
     public TwagoCoding(String firstLine) {
@@ -22,6 +22,10 @@ public class TwagoCoding {
 
     public long getMaximumValue() {
         return currentMaximumValue;
+    }
+
+    public int getLinesSize() {
+        return linesSize;
     }
 
     public void executeOperation(String line) {
@@ -50,13 +54,13 @@ public class TwagoCoding {
 
     private void validateFirstLineInput(String firstLine) {
         if (firstLine == null || !firstLine.matches("\\d+ \\d+")) {
-            throw new IllegalArgumentException("First line input should have the below format separated by a single space\nNUMBER NUMBER\ne.g.:\n5 3");
+            throw new IllegalArgumentException("Invalid input:\n" + firstLine + "\nFirst line input should have the below format separated by a single space\nNUMBER NUMBER\ne.g.:\n5 3");
         }
     }
 
     private void validateOperationLineInput(String operationLine) {
         if (operationLine == null || !operationLine.matches("\\d+ \\d+ \\d+")) {
-            throw new IllegalArgumentException("Second line input (operation) should have the below format separated by a single space\nNUMBER NUMBER NUMBER\ne.g.:\n1 2 100");
+            throw new IllegalArgumentException("Invalid operation:\n" + operationLine + "\nSecond line input (operation) should have the below format separated by a single space\nNUMBER NUMBER NUMBER\ne.g.:\n1 2 100");
         }
     }
 
